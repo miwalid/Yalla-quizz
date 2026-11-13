@@ -270,6 +270,11 @@ html[dir=rtl] .opt .bar{transform-origin:right}
 .bank-option input[type=radio]{width:18px;height:18px;margin:auto;accent-color:var(--green)}
 .bank-translations{margin-top:6px}
 .bank-media-name{overflow-wrap:anywhere}
+.bank-phone-media{display:grid;gap:7px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#29145f}
+.bank-phone-media .local-media{margin:0}
+.bank-phone-media .local-media video{max-height:160px}
+.bank-phone-media .local-media audio{max-width:100%}
+.bank-phone-media .btn{justify-self:start}
 .bank-status{margin-block:9px 0;color:#a7f6d7}
 .bank-status:empty{display:none}
 .bank-status[data-error]{color:#ffbdd3}
@@ -2692,10 +2697,10 @@ Object.assign(T.ar,{
  bankEdit:'تعديل محتوى الفئات',bankHint:'اختر فئة، ثم اختر عنصراً لتعديله.',bankItems:'العناصر ({n})',bankAdd:'إضافة',bankNew:'عنصر جديد',bankItemEdit:'تعديل العنصر',bankPrompt:'السؤال أو التعليمات',bankSave:'حفظ',bankSaved:'تم الحفظ.',bankRemoved:'تم الحذف.',bankDeleteAsk:'هل تريد حذف هذا العنصر من الفئة؟',bankEmpty:'هذه الفئة فارغة.',bankOptions:'الإجابات · حدّد الإجابة الصحيحة',bankCorrect:'الإجابة الصحيحة: {n}',bankShow:'الإجابة المعروضة',bankTranslate:'اللغة الأخرى (اختياري)',bankFormat:'النوع',bankMemory:'تسلسل الألوان',bankCalc:'حساب ذهني',bankSequence:'تسلسل الألوان (A، B، C، D)',bankTune:'مقطوعة من اللعبة',bankGenerated:'توليد آلي',bankReplaceGenerated:'يُولَّد هذا العنصر آلياً. احفظ الحقول لاستبداله بمحتوى ثابت.',bankInvalid:'تحقّق من السؤال وحقول النوع المختار.',bankLimit:'الحد الأقصى 100 عنصر في كل فئة.',bankEnable:'اختر فئة واحدة على الأقل تحتوي على عناصر.',bankDeletedVideo:'إزالة الملف الحالي',bankScope:'تُطبّق التعديلات على الألعاب الجديدة في هذا الجهاز والمتصفح.'
 });
 Object.assign(T.fr,{
- bankMusic:'Fichier audio ou vidéo',bankIntroAudio:'Intro à faire écouter (fichier audio)',bankLyrics:'Paroles (facultatif si elles figurent dans la vidéo)',bankPerformanceTime:'Durée de la prestation (secondes)',bankMusicInvalid:'Choisis un fichier compatible de 50 Mo maximum et une durée entre 5 et 900 secondes, si demandée.',bankMusicRemove:'Retirer le fichier actuel',bankListenIntro:'Fais écouter l’intro, puis ouvre les réponses.',bankMusicPlay:'Lance le morceau si la lecture ne démarre pas automatiquement.'
+ bankMusic:'Fichier audio ou vidéo',bankIntroAudio:'Intro à faire écouter (fichier audio)',bankPhonePick:'Choisir dans les fichiers du téléphone',bankPhoneHint:'Parcours Musique, Téléchargements ou tes dossiers. 50 Mo maximum par fichier.',bankPhoneSelected:'Fichier sélectionné : {name}',bankPhoneSaved:'Fichier enregistré : {name}',bankBuiltIn:'Utiliser un morceau du jeu',bankLyrics:'Paroles (facultatif si elles figurent dans la vidéo)',bankPerformanceTime:'Durée de la prestation (secondes)',bankMusicInvalid:'Choisis un fichier compatible de 50 Mo maximum et une durée entre 5 et 900 secondes, si demandée.',bankMusicRemove:'Retirer le fichier actuel',bankListenIntro:'Fais écouter l’intro, puis ouvre les réponses.',bankMusicPlay:'Lance le morceau si la lecture ne démarre pas automatiquement.'
 });
 Object.assign(T.ar,{
- bankMusic:'ملف صوتي أو فيديو',bankIntroAudio:'مقدّمة اللحن (ملف صوتي)',bankLyrics:'الكلمات (اختيارية إذا كانت موجودة في الفيديو)',bankPerformanceTime:'مدّة العرض (بالثواني)',bankMusicInvalid:'اختر ملفاً متوافقاً لا يتجاوز 50 ميغابايت، ومدّة بين 5 و900 ثانية عند طلبها.',bankMusicRemove:'إزالة الملف الحالي',bankListenIntro:'شغّل مقدّمة اللحن ثم افتح باب الإجابة.',bankMusicPlay:'شغّل المقطع إذا لم يبدأ تلقائياً.'
+ bankMusic:'ملف صوتي أو فيديو',bankIntroAudio:'مقدّمة اللحن (ملف صوتي)',bankPhonePick:'اختيار ملف من الهاتف',bankPhoneHint:'تصفّح الموسيقى أو التنزيلات أو مجلّداتك. الحد الأقصى 50 ميغابايت لكل ملف.',bankPhoneSelected:'الملف المختار: {name}',bankPhoneSaved:'الملف المحفوظ: {name}',bankBuiltIn:'استخدام مقطوعة من اللعبة',bankLyrics:'الكلمات (اختيارية إذا كانت موجودة في الفيديو)',bankPerformanceTime:'مدّة العرض (بالثواني)',bankMusicInvalid:'اختر ملفاً متوافقاً لا يتجاوز 50 ميغابايت، ومدّة بين 5 و900 ثانية عند طلبها.',bankMusicRemove:'إزالة الملف الحالي',bankListenIntro:'شغّل مقدّمة اللحن ثم افتح باب الإجابة.',bankMusicPlay:'شغّل المقطع إذا لم يبدأ تلقائياً.'
 });
 let LANG=(store.get('yq_lang')||((navigator.language||'fr').startsWith('ar')?'ar':'fr'));
 if(LANG!=='ar')LANG='fr';
@@ -2952,6 +2957,7 @@ const MINI_KEY='yq_minigames_v1';
 let miniMediaDraft=null,miniMediaFile=null,miniSaving=false;
 const AUDIO_ACCEPT='audio/*,.mp3,.m4a,.wav,.ogg,.oga,.aac,.flac,.opus';
 const isMusicCategory=type=>['melody','karaoke','playback'].includes(type);
+const acceptsCategoryMedia=(type,kind)=>type==='video'?kind==='video':kind==='audio'||(type!=='melody'&&kind==='video');
 const performanceMedia=q=>q.media&&!q.custom&&isPerfT(q.type);
 const needsWatch=q=>q.type==='mem'||q.type==='video'||(q.media&&!performanceMedia(q));
 const MEDIA_LIMIT=50*1024*1024,VIDEO_ACCEPT='video/*,.mp4,.m4v,.mov,.mkv,.avi,.webm,.3gp,.3g2,.mpg,.mpeg,.mpe,.m2v,.wmv,.asf,.flv,.f4v,.ogv,.vob,.ts,.mts,.m2ts,.mxf,.rm,.rmvb,.divx',MEDIA_ACCEPT='image/jpeg,image/png,image/webp,image/gif,audio/mpeg,audio/mp4,audio/wav,audio/x-wav,audio/ogg,audio/aac,audio/webm,.jpg,.jpeg,.png,.webp,.gif,.mp3,.m4a,.wav,.ogg,.aac,'+VIDEO_ACCEPT;
@@ -3182,6 +3188,7 @@ function openCategoryEditor(initialCat='culture'){
   let index=categoryEntries(cat).length?0:-1;
   let saving=false;
   let removeFile=false;
+  let previewURL=null;
   const dialog=document.createElement('dialog');
   dialog.className='bank-dialog';
   dialog.setAttribute('aria-labelledby','bank-heading');
@@ -3214,7 +3221,12 @@ function openCategoryEditor(initialCat='culture'){
     if(item.type==='melody'||item.type==='karaoke')return L(TUNES.find(tune=>tune.id===item.tune)?.title)||L(item.p);
     return L(item.p);
   };
+  function stopPhonePreview(){
+    stopLocalMedia(form);
+    if(previewURL){URL.revokeObjectURL(previewURL);previewURL=null;}
+  }
   function render(selectedType){
+    stopPhonePreview();
     const items=categoryEntries(cat),item=items[index];
     const type=selectedType||item?.type||({enigmes:'text',video:'video',memoire:'text',melodie:'melody',karaoke:'karaoke',playback:'playback'})[cat]||'qcm';
     tabs.innerHTML=BASE_CATEGORIES.map(id=>`<button type="button" class="btn ghost bank-category" data-bank-cat="${id}" aria-pressed="${cat===id}"><i class="bank-dot" aria-hidden="true" style="--c:var(${CATS[id].c})"></i>${esc(L(CATS[id]))}</button>`).join('');
@@ -3229,15 +3241,20 @@ function openCategoryEditor(initialCat='culture'){
     let controls=cat==='memoire'?`<label class="field">${t('bankFormat')}<select name="type"><option value="text" ${type==='text'?'selected':''}>${t('bankCalc')}</option><option value="mem" ${type==='mem'?'selected':''}>${t('bankMemory')}</option></select></label>`:'';
     if(automatic)controls+=`<p class="note">${t('bankReplaceGenerated')}</p>`;
     controls+=field(t('bankPrompt'),'prompt',L(prompt),600,!isMusicCategory(type)&&type!=='mem',true);
-    if(tune){
-      const tunes=type==='karaoke'?TUNES.filter(song=>song.lines):TUNES;
-      controls+=`<label class="field">${t('bankTune')}<select name="tune"><option value="" ${row?.tune?'':'selected'}>— ${t('bankTune')} —</option>${tunes.map(song=>`<option value="${song.id}" ${song.id===row?.tune?'selected':''}>${esc(L(song.title))}</option>`).join('')}</select></label>`;
-    }
     if(isMusicCategory(type)){
-      controls+=`<label class="field">${t(type==='melody'?'bankIntroAudio':'bankMusic')}<input name="file" type="file" accept="${AUDIO_ACCEPT}${type==='melody'?'':','+VIDEO_ACCEPT}"></label>
-        ${row?.media?`<p class="note bank-media-name" data-bank-file-name>${esc(row.media.name)}</p><button type="button" class="btn ghost" data-bank-remove-file>${t('bankMusicRemove')}</button>`:''}`;
+      controls+=`<section class="bank-phone-media" aria-label="${t(type==='melody'?'bankIntroAudio':'bankMusic')}">
+        <button type="button" class="btn blue" data-bank-pick-file>${t('bankPhonePick')}</button>
+        <input name="file" type="file" accept="${AUDIO_ACCEPT}${type==='melody'?'':','+VIDEO_ACCEPT}" hidden>
+        <p class="note">${t('bankPhoneHint')}</p>
+        <div data-bank-preview>${row?.media?`<p class="note bank-media-name">${esc(t('bankPhoneSaved',{name:row.media.name}))}</p>${localMediaHTML(row.media)}`:''}</div>
+        <button type="button" class="btn ghost" data-bank-remove-file ${row?.media?'':'hidden'}>${t('bankMusicRemove')}</button>
+      </section>`;
       if(isPerfT(type))controls+=`<label class="field">${t('bankPerformanceTime')}<input name="performance-time" type="number" min="5" max="900" value="${row?.performanceTime??40}"></label>`;
       if(type==='karaoke')controls+=field(t('bankLyrics'),'lyrics',L(row?.lyrics),5000,false,true);
+    }
+    if(tune){
+      const tunes=type==='karaoke'?TUNES.filter(song=>song.lines):TUNES;
+      controls+=`<details><summary>${t('bankBuiltIn')}</summary><label class="field">${t('bankTune')}<select name="tune"><option value="" ${row?.tune?'':'selected'}>— ${t('bankTune')} —</option>${tunes.map(song=>`<option value="${song.id}" ${song.id===row?.tune?'selected':''}>${esc(L(song.title))}</option>`).join('')}</select></label></details>`;
     }
     if(type==='video'){
       controls+=`<label class="field">${t('mediaVideoLocal')}<input name="file" type="file" accept="${VIDEO_ACCEPT}"></label>
@@ -3263,6 +3280,8 @@ function openCategoryEditor(initialCat='culture'){
       <div class="bank-actions"><button type="submit" class="btn">${t('bankSave')}</button>
       ${item?`<button type="button" class="btn ghost" data-bank-delete>${t('miniDelete')}</button>`:''}</div>`;
     form.dataset.type=type;
+    if(row?.media&&isMusicCategory(type))mountLocalMedia(form);
+    else sweepMediaURLs();
   }
   dialog.addEventListener('click',event=>{
     const button=event.target.closest('button');
@@ -3276,9 +3295,18 @@ function openCategoryEditor(initialCat='culture'){
     }else if(button.hasAttribute('data-bank-add')){
       if(categoryCount(cat)>=100){setStatus(t('bankLimit'),true);return;}
       index=-1;
+    }else if(button.hasAttribute('data-bank-pick-file')){
+      form.elements.file.click();
+      return;
     }else if(button.hasAttribute('data-bank-remove-file')){
       removeFile=true;
-      $('[data-bank-file-name]',dialog).hidden=true;
+      const preview=$('[data-bank-preview]',form);
+      if(preview){
+        stopPhonePreview();
+        preview.replaceChildren();
+        form.elements.file.value='';
+        sweepMediaURLs();
+      }else $('[data-bank-file-name]',dialog).hidden=true;
       button.hidden=true;
       return;
     }else if(button.hasAttribute('data-bank-delete')){
@@ -3290,11 +3318,41 @@ function openCategoryEditor(initialCat='culture'){
     }else return;
     removeFile=false;
     render();
-    if(button.hasAttribute('data-bank-add'))form.elements.prompt.focus();
+    if(button.hasAttribute('data-bank-add'))($('[data-bank-pick-file]',form)||form.elements.prompt).focus();
     else if(button.dataset.bankCat!==undefined)$('[aria-pressed=true]',tabs)?.focus();
     else if(button.dataset.bankItem!==undefined)$('[aria-pressed=true]',list)?.focus();
   });
-  form.addEventListener('change',event=>{if(event.target.name==='type')render(event.target.value);});
+  form.addEventListener('change',event=>{
+    const input=event.target;
+    if(input.name==='type'){render(input.value);return;}
+    if(input.name!=='file'||!isMusicCategory(form.dataset.type)||!input.files[0])return;
+    const file=input.files[0],preview=$('[data-bank-preview]',form);
+    let media;
+    try{
+      media=describeMedia(file);
+      if(!acceptsCategoryMedia(form.dataset.type,media.kind))throw Error('format');
+    }catch(e){
+      input.value='';
+      setStatus(t('bankMusicInvalid'),true);
+      stopPhonePreview();
+      const old=categoryEntries(cat)[index]?.media;
+      const saved=!removeFile&&old;
+      preview.innerHTML=saved?`<p class="note bank-media-name">${esc(t('bankPhoneSaved',{name:saved.name}))}</p>${localMediaHTML(saved)}`:'';
+      $('[data-bank-remove-file]',form).hidden=!saved;
+      if(saved)mountLocalMedia(preview);
+      return;
+    }
+    stopPhonePreview();
+    setStatus('');
+    preview.innerHTML=`<p class="note bank-media-name">${esc(t('bankPhoneSelected',{name:media.name}))}</p>${localMediaHTML(media)}`;
+    const player=$('audio,video',preview);
+    player.removeAttribute('data-media-id');
+    player.onerror=()=>{const warning=$('.err',preview);warning.textContent=t('mediaReadBad');warning.hidden=false;};
+    previewURL=URL.createObjectURL(new Blob([file],{type:media.mime}));
+    player.src=previewURL;
+    $('[data-bank-remove-file]',form).hidden=false;
+    sweepMediaURLs();
+  });
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     if(saving)return;
@@ -3339,7 +3397,7 @@ function openCategoryEditor(initialCat='culture'){
         try{
           question.media=describeMedia(file);
           const kind=question.media.kind;
-          if(type==='video'?kind!=='video':kind!=='audio'&&(type==='melody'||kind!=='video'))return fail(mediaError);
+          if(!acceptsCategoryMedia(type,kind))return fail(mediaError);
         }catch(e){return fail(mediaError);}
         newMedia=file;
       }else if(url){
@@ -3373,6 +3431,7 @@ function openCategoryEditor(initialCat='culture'){
   });
   dialog.addEventListener('cancel',event=>{if(saving)event.preventDefault();});
   dialog.addEventListener('close',()=>{
+    stopPhonePreview();
     dialog.remove();
     renderSetup();
     $('[data-act="bankedit"]')?.focus();
